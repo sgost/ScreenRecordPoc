@@ -1,38 +1,119 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.video_recorder {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  height: 100vh;
+  width: 104vw;
+  background: #9182c4;
+}
+
+.video_recorder .video_preview_container {
+  width: 35vw;
+  border-radius: 1vw;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.06);
+}
+
+.video_recorder .status_logo {
+  font-style: normal;
+font-weight: 700;
+font-size: 35px;
+line-height: 90px;
+color: #EB2C7D;
+}
+
+.video_recorder .control_btns {
+  display:flex;
+  gap: 20px;
+  margin-top: 3vw;
+}
+
+.video_recorder .control_btns .start_btns{
+  width: 188px;
+  height: 54px;
+  background: #FF4081;
+  border-radius: 8px;
+  border: none;
+  outline: none;
   color: white;
+  font-size: 15px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.video_recorder .control_btns .stop_btns{
+  background:  #1481BA;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.video_recorder .btn_preview{
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  color: blue;  
+  cursor: pointer;
+}
+
+.video_recorder .upload_btn{
+  width: 188px;
+  height: 54px;
+  background: #40ffb6;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.video_recorder .userbtn{
+  width: 188px;
+  height: 54px;
+  background: #4340ff;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 0 2rem 0 auto;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
+
+.pc_recorder {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+}
+.pc_recorder h1 {
+  font-size: 1.5rem;
+}
+
+.pc_recorder .control_btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.pc_recorder .control_btns .start_btns {
+  width: 80px;
+  height: 40px;
+  background: #40ffb6;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pc_recorder .control_btns .stop_btns {
+background-color: #EB455F;
 }
