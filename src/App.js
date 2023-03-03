@@ -2,7 +2,7 @@ import './App.css';
 import { useReactMediaRecorder } from "react-media-recorder";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import getBlobDuration from 'get-blob-duration'
 
 function App() {
 
@@ -22,7 +22,6 @@ function App() {
   const [description, setDescription] = useState("");
   const [proceed, setProceed] = useState(false);
 
-
   const uploadVideoFun = async () => {
     let formData = new FormData();
     if (mediaBlobUrl) {
@@ -30,43 +29,49 @@ function App() {
         .then((res) => res.blob())
         .then((blob) => {
           const file = new File([blob], mediaBlobUrl, { type: blob.type });
+          let time;
+          getBlobDuration(file).then(function (duration) {
+            time = duration;
+          });
           formData.append('file', file);
           formData.append('project_name', projectName)
           formData.append('title', title);
           formData.append('desc', description);
+          console.log("mediaBlobUrl", file)
           axios({
             url: `https://screen-stag.fidisys.com/api/v1/files/project`,
             method: 'POST',
             data: formData
           }).then((_res) => {
-            axios({
-              url: `https://screen-stag.fidisys.com/api/v1/files/${_res?.data?.data?.project_id}/images`,
-              method: 'POST',
-              data: {
-                "thumbnail": [
-                  {
-                    "duration": "00:00:03",
-                    "x": "xx",
-                    "y": "yy",
-                  },
-                  {
-                    "duration": "00:00:06",
-                    "x": "xx",
-                    "y": "yy",
-                  },
-                  {
-                    "duration": "00:00:08",
-                    "x": "xx",
-                    "y": "yy",
-                  },
-                  {
-                    "duration": "00:00:10",
-                    "x": "xx",
-                    "y": "yy",
-                  },
-                ]
-              }
-            }).then((_res) => alert("Video Saved"))
+            if (_res?.data?.data) {
+              axios({
+                url: `https://screen-stag.fidisys.com/api/v1/files/${_res?.data?.data?.project_id}/thumbnail`,
+                method: 'POST'
+              }).then(() => {
+                axios({
+                  url: `https://screen-stag.fidisys.com/api/v1/files/${_res?.data?.data?.project_id}/images`,
+                  method: 'POST',
+                  data: {
+                    "thumbnail": [
+                      {
+                        "duration": "00:00:03",
+                        "x": "xx",
+                        "y": "yy",
+                        "width": "100",
+                        "height": "50"
+                      },
+                      {
+                        "duration": `00:00:${Math.round(time)}`,
+                        "x": "xx",
+                        "y": "yy",
+                        "width": "100",
+                        "height": "50"
+                      }
+                    ]
+                  }
+                }).then((_res) => alert("Video Saved"))
+              })
+            }
           }).error((_err) => alert("Oops!, Something went wrong"))
         })
     }
