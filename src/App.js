@@ -37,7 +37,7 @@ function App() {
           formData.append('project_name', projectName)
           formData.append('title', title);
           formData.append('desc', description);
-          console.log("mediaBlobUrl", file)
+
           axios({
             url: `https://screen-stag.fidisys.com/api/v1/files/project`,
             method: 'POST',
@@ -57,14 +57,14 @@ function App() {
                         "duration": "00:00:03",
                         "x": "xx",
                         "y": "yy",
-                        "width": "100",
+                        "width": "3000",
                         "height": "50"
                       },
                       {
                         "duration": `00:00:${Math.round(time)}`,
                         "x": "xx",
                         "y": "yy",
-                        "width": "100",
+                        "width": Math.round(time) * 1000,
                         "height": "50"
                       }
                     ]
