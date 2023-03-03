@@ -61,10 +61,10 @@ function App() {
                         "height": "50"
                       },
                       {
-                        "duration": `00:00:${Math.round(time)}`,
+                        "duration": `00:00:${parseInt(time)}`,
                         "x": "xx",
                         "y": "yy",
-                        "width": Math.round(time) * 1000,
+                        "width": parseInt(time) * 1000,
                         "height": "50"
                       }
                     ]
