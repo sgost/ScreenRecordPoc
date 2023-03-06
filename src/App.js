@@ -5,12 +5,10 @@ import axios from 'axios';
 function App() {
 
   const [getVidData, setGetVidData] = useState([]);
-  const [currVidId, setCurrVidId] = useState("");
   const [openVid, setVidOpen] = useState({
     videoKey: "",
     open: false
   });
-  const [imageLink, setImageLink] = useState('');
   const [getProjectData, setGetProjectData] = useState({});
   const [getAudioData, setGetAudioData] = useState([]);
   const [selImage, setSelImage] = useState(0);
@@ -20,6 +18,7 @@ function App() {
 
   useEffect(() => {
     getVidFun();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getVidFun = () => {
@@ -35,6 +34,7 @@ function App() {
 
   useEffect(() => {
     getProjectDetailsFun();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openVid.open])
 
   const getProjectDetailsFun = () => {
@@ -44,19 +44,19 @@ function App() {
     }).then((res) => {
       setGetProjectData(res?.data?.data);
       if (res?.data?.data?.audio?.length > 0) {
-        res?.data?.data?.audio?.map((item) => {
+        res?.data?.data?.audio?.map((item) => (
           getAudioData.push({
             "text": item?.text,
             "duration": parseInt(item?.width)
           })
-        })
+        ))
       } else {
-        res?.data?.data?.images?.map((item) => {
+        res?.data?.data?.images?.map((item) => (
           getAudioData.push({
             "text": "",
             "duration": parseInt(item?.width)
           })
-        })
+        ))
       }
     }).catch((err) => {
       console.log("err", err)
@@ -111,26 +111,24 @@ function App() {
           <h2 className='record_title'>Library</h2>
           <p className='description'>Manage all your videos here. You can record, edit and publish videos to the Library.</p>
           <div className='video_container'>
-            {getVidData && getVidData?.map((item) => {
-              return (
-                <div className='video_tab' key={item?.title}>
-                  <img src={item?.thumbnail_image} onClick={() => setVidOpen({
-                    videoKey: item?.id,
-                    open: true,
-                    title: item?.title
-                  })} />
-                  <div className='vid_desc'>
-                    <div className='video_desc_btns'>
-                      <h3>{item?.title?.toUpperCase()}</h3>
-                      <p><span style={{ color: '#ff193b', fontWeight: 'bold' }}>Days: </span> 2 days ago</p>
-                    </div>
-                    {item?.final_video &&
-                      <p className='preview_btn' onClick={() => showPreviewPopFun(item?.final_video)}>Preview</p>
-                    }
+            {getVidData && getVidData?.map((item) => (
+              <div className='video_tab' key={item?.title}>
+                <img src={item?.thumbnail_image} onClick={() => setVidOpen({
+                  videoKey: item?.id,
+                  open: true,
+                  title: item?.title
+                })} alt="img" />
+                <div className='vid_desc'>
+                  <div className='video_desc_btns'>
+                    <h3>{item?.title?.toUpperCase()}</h3>
+                    <p><span style={{ color: '#ff193b', fontWeight: 'bold' }}>Days: </span> 2 days ago</p>
                   </div>
+                  {item?.final_video &&
+                    <p className='preview_btn' onClick={() => showPreviewPopFun(item?.final_video)}>Preview</p>
+                  }
                 </div>
-              )
-            })}
+              </div>
+            ))}
           </div>
         </div>
         :
@@ -148,7 +146,7 @@ function App() {
                 return (
                   <div className={selImage === index ? 'preview_sel_img_cont preview_sel_img_cont_seected' : 'preview_sel_img_cont'} key={item.id}>
                     <label>{index + 1}</label>
-                    <img src={item?.image} className='prev_sel_img' onClick={() => { setImageLink(item?.image); setSelImage(index) }} />
+                    <img src={item?.image} className='prev_sel_img' onClick={() => { setSelImage(index) }} alt="img" />
                   </div>
                 )
               })}
@@ -161,7 +159,7 @@ function App() {
                     <input type="text" value={item?.text} onChange={((e) => updateAudioFun(e.target.value, index))} className='text_group' placeholder='Enter the text here that would be converted to speech (Use comma, line breaks for pausing)' />
                   </div>
                   <p className='intro_desc'>Introductory slide to set context to the users</p>
-                  <img src={getProjectData?.images[index]?.image} className='video_preview' />
+                  <img src={getProjectData?.images[index]?.image} className='video_preview' alt="img" />
                 </div>
               )
             })}
